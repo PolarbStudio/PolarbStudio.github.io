@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>캔버스 연습</title>
+    <style>
+        * { padding: 0;margin: 0;}
+        canvas { background: #eee; display: block;margin: 80px auto 0;}
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext("2d");
+        var x = canvas.width/2;
+        var y = canvas.height-30;
+        var bcolor = "#0095DD";
+        var dx = 3;
+        var dy = -3;
+
+        const ballradius = 10;
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballradius, 0, Math.PI*2);
+            ctx.fillStyle = bcolor;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            if(y+dy > canvas.height - ballradius || y+dy < ballradius){
+                dy = -dy;
+                bcolor = "#" + Math.round(Math.random() * 0xFFFFFF) . toString(16);
+            }
+            if(x+dx > canvas.width - ballradius || x+dx < ballradius){
+                dx = -dx;
+                bcolor = "#" + Math.round(Math.random() * 0xFFFFFF) . toString(16);
+            }
+            x += dx;
+            y += dy;
+
+        }
+       setInterval(draw, 10);
+    </script>
+</body>
+</html>
